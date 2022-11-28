@@ -31,6 +31,26 @@ class HomeScreen extends StatelessWidget {
                   )),
             ),
           ),
+          Expanded(
+            child: GridView.builder(
+              itemCount: 10,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage('https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_500.jpg?61e575e8653e5920470a38d1482d7312/melon/optimize/90'),
+                    )
+                  ),
+                );
+              },
+            ),
+          )
         ],
       ),
     );
