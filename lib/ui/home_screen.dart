@@ -33,6 +33,7 @@ class HomeScreen extends StatelessWidget {
           ),
           Expanded(
             child: GridView.builder(
+              padding: const EdgeInsets.all(16.0),
               itemCount: 10,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -41,7 +42,8 @@ class HomeScreen extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 return Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(16.0)),
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage('https://hips.hearstapps.com/hmg-prod/images/wednesday-jenna-ortega-2-1654540590.jpg?crop=1.00xw:0.978xh;0,0'),
