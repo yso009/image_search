@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:image_search/model/Photo.dart';
 
 class PhotoWidget extends StatelessWidget {
-  const PhotoWidget({Key? key}) : super(key: key);
+  final Photo photo;
+
+  const PhotoWidget({Key? key, required this.photo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
