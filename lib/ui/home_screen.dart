@@ -26,8 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final photoProvider =
-        PhotoProvider.of(context); // photo_provider에 PhotoProvider를 얻어옴
+    final viewModel = PhotoProvider.of(context).viewModel; // photo_provider에 PhotoProvider를 얻어옴
 
     return Scaffold(
       appBar: AppBar(
@@ -51,40 +50,40 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   suffixIcon: IconButton(
                     onPressed: () async {
-                      photoProvider.fetch(_controller.text);
+                      viewModel.fetch(_controller.text);
                     },
                     icon: const Icon(Icons.search),
                   )),
             ),
           ),
           StreamBuilder<List<Photo>>(
-            stream: photoProvider.photoStream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return const CircularProgressIndicator();
-              }
+              stream: viewModel.photoStream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
 
-              final photos = snapshot.data!;
+                final photos = snapshot.data!;
 
-              return Expanded(
-                child: GridView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: photos.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
+                return Expanded(
+                  child: GridView.builder(
+                    padding: const EdgeInsets.all(16.0),
+                    itemCount: photos.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                    ),
+                    itemBuilder: (context, index) {
+                      final photo = photos[index];
+                      return PhotoWidget(
+                        photo: photo,
+                      );
+                    },
                   ),
-                  itemBuilder: (context, index) {
-                    final photo = photos[index];
-                    return PhotoWidget(
-                      photo: photo,
-                    );
-                  },
-                ),
-              );
-            }
-          )
+                );
+              })
         ],
       ),
     );
