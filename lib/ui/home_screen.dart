@@ -26,7 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = PhotoProvider.of(context).viewModel; // photo_provider에 PhotoProvider를 얻어옴
+    final viewModel = PhotoProvider.of(context)
+        .viewModel; // photo_provider에 PhotoProvider를 얻어옴
 
     return Scaffold(
       appBar: AppBar(
