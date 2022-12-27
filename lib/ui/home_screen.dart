@@ -15,7 +15,26 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Container(),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    
+                  },
+                  icon: const Icon(Icons.search),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
