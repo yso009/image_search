@@ -25,14 +25,35 @@ class HomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
                 suffixIcon: IconButton(
-                  onPressed: () {
-                    
-                  },
+                  onPressed: () {},
                   icon: const Icon(Icons.search),
                 ),
               ),
             ),
           ),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: 10,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                          'https://avatars.githubusercontent.com/u/71508993?v=4'),
+                    ),
+                  ),
+                );
+              },
+            ),
+          )
         ],
       ),
     );
