@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:image_search/data/api.dart';
+import 'package:image_search/data/photo_provider.dart';
 import 'package:image_search/model/photo.dart';
 import 'package:image_search/ui/widget/photo_widget.dart';
 import 'package:http/http.dart' as http;
@@ -14,8 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final api = PixabayApi();
-
   final _controller = TextEditingController();
 
   List<Photo> _photos = [];
@@ -28,6 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final photoProvider = PhotoProvider.of(context); // photo_provider.dart의 static PhoroProvider of(BuildContext context)를 얻는 것
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -50,7 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    final photos = await api.fetch(_controller.text);
+                    final photos =
+                        await photoProvider.api.fetch(_controller.text);
                     setState(() {
                       _photos = photos;
                     });
@@ -72,7 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 // return Container();
                 final photo = _photos[index];
-                return PhotoWidget(photo: photo);
+                return PhotoWidget(
+                  photo: photo,
+                );
               },
             ),
           )
