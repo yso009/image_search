@@ -17,8 +17,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _controller = TextEditingController();
 
-  List<Photo> _photos = [];
-
   @override
   void dispose() {
     _controller.dispose();
