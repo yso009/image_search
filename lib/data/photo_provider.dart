@@ -7,7 +7,7 @@ import 'package:image_search/model/photo.dart';
 class PhotoProvider extends InheritedWidget {
   final PixabayApi api;
 
-  final _photoStreamController = StreamController<List<Photo>>();
+  final _photoStreamController = StreamController<List<Photo>>()..add([]); // 처음 실행 시 빈 리스트를 추가
   Stream<List<Photo>> get photoStream => _photoStreamController.stream;
 
   PhotoProvider({

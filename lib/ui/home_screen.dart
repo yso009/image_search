@@ -25,7 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final photoProvider = PhotoProvider.of(context); // photo_provider.dart의 static PhoroProvider of(BuildContext context)를 얻는 것
+    final photoProvider = PhotoProvider.of(
+        context); // photo_provider.dart의 static PhoroProvider of(BuildContext context)를 얻는 것
 
     return Scaffold(
       appBar: AppBar(
@@ -49,35 +50,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    final photos =
-                        await photoProvider.api.fetch(_controller.text);
-                    setState(() {
-                      _photos = photos;
-                    });
+                    photoProvider.fetch(_controller.text);
                   },
                   icon: const Icon(Icons.search),
                 ),
               ),
             ),
           ),
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: _photos.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-              ),
-              itemBuilder: (context, index) {
-                // return Container();
-                final photo = _photos[index];
-                return PhotoWidget(
-                  photo: photo,
+          StreamBuilder<List<Photo>>(
+              stream: photoProvider.photoStream,
+              builder: (context, snapshot) {
+                // 위 photoProvider.photoStream이 이 부분에서 snapshot을 통해 들어옴
+                if (!snapshot.hasData) {
+                  // 데이터가 없다면
+                  return const CircularProgressIndicator();
+                }
+
+                final photos = snapshot.data!; // photoStream => snapshot에 들어오고 photos에 사진을 담음
+
+                return Expanded(
+                  child: GridView.builder(
+                    padding: const EdgeInsets.all(16.0),
+                    itemCount: photos.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                    ),
+                    itemBuilder: (context, index) {
+                      // return Container();
+                      final photo = photos[index];
+                      return PhotoWidget(
+                        photo: photo,
+                      );
+                    },
+                  ),
                 );
-              },
-            ),
-          )
+              }),
         ],
       ),
     );
