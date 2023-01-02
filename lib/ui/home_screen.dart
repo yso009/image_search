@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_search/data/api.dart';
 import 'package:image_search/data/photo_provider.dart';
 import 'package:image_search/model/photo.dart';
+import 'package:image_search/ui/home_view_model.dart';
 import 'package:image_search/ui/widget/photo_widget.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,8 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final photoProvider = PhotoProvider.of(
-        context); // photo_provider.dart의 static PhoroProvider of(BuildContext context)를 얻는 것
+    final viewModel = PhotoProvider.of(context).viewModel;
+    // photo_provider.dart의 static PhoroProvider of(BuildContext context)를 얻는 것
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    photoProvider.fetch(_controller.text);
+                    viewModel.fetch(_controller.text);
                   },
                   icon: const Icon(Icons.search),
                 ),
@@ -58,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           StreamBuilder<List<Photo>>(
-              stream: photoProvider.photoStream,
+              // stream: photoProvider.photoStream,
               builder: (context, snapshot) {
                 // 위 photoProvider.photoStream이 이 부분에서 snapshot을 통해 들어옴
                 if (!snapshot.hasData) {
