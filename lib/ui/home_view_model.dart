@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:image_search/data/photo_api_repository.dart';
 import 'package:image_search/model/photo.dart';
 
-class HomeViewModel { 
+class HomeViewModel {
   final PhotoApiRepository repository;
 
   final _photoStreamController = StreamController<List<Photo>>()..add([]); // 처음 실행 시 빈 리스트를 추가
